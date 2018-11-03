@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
     # Create a public network, which generally matched to bridged network.
     # Bridged networks make the machine appear as another physical device on
     # your network.
-    # config.vm.network "public_network"
+    vm1.vm.network "public_network", use_dhcp_assigned_default_route: true
     # config.vm.network "forwarded_port", guest: 80, host: 8080
     vm1.vm.network "forwarded_port", guest: 443, host: 1443
     # Share an additional folder to the guest VM. The first argument is
@@ -80,6 +80,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "VM2" do |vm2|
     vm2.vm.box = "ubuntu/trusty64"
     vm2.vm.hostname = 'VM2'
+    vm2.vm.network "public_network", use_dhcp_assigned_default_route: true
     vm2.vm.network "forwarded_port", guest: 443, host: 2443
     vm2.vm.provider "virtualbox" do |vb|
       # Display the VirtualBox GUI when booting the machine
