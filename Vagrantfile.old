@@ -6,15 +6,15 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  config.vm.define "kali" do |kali|
+  config.vm.define "VM1" do |vm1|
     # The most common configuration options are documented and commented below.
     # For a complete reference, please see the online documentation at
     # https://docs.vagrantup.com.
 
     # Every Vagrant development environment requires a box. You can search for
     # boxes at https://vagrantcloud.com/search.
-    kali.vm.box = "offensive-security/kali-linux"
-    kali.vm.hostname = 'kali'
+    vm1.vm.box = "ubuntu/trusty64"
+    vm1.vm.hostname = 'VM1'
     
     # Disable automatic box update checking. If you disable this, then
     # boxes will only be checked for updates when the user runs
@@ -39,9 +39,9 @@ Vagrant.configure("2") do |config|
     # Create a public network, which generally matched to bridged network.
     # Bridged networks make the machine appear as another physical device on
     # your network.
-    kali.vm.network "public_network", use_dhcp_assigned_default_route: true
+    vm1.vm.network "public_network", use_dhcp_assigned_default_route: true
     # config.vm.network "forwarded_port", guest: 80, host: 8080
-    kali.vm.network "forwarded_port", guest: 443, host: 1443
+    vm1.vm.network "forwarded_port", guest: 443, host: 1443
     # Share an additional folder to the guest VM. The first argument is
     # the path on the host to the actual folder. The second argument is
     # the path on the guest to mount the folder. And the optional third
@@ -52,16 +52,16 @@ Vagrant.configure("2") do |config|
     # backing providers for Vagrant. These expose provider-specific options.
     # Example for VirtualBox:
     #
-    kali.vm.provider "virtualbox" do |vb|
+    vm1.vm.provider "virtualbox" do |vb|
       # Display the VirtualBox GUI when booting the machine
-      vb.gui = true
+      # vb.gui = true
 
       # Customize the amount of memory on the VM:
-      vb.memory = "1024"
+      vb.memory = "512"
       # Customize the amount of processors on the VM:
       vb.cpus = "1"
       # Customize the amount of video memory on the VM:
-      vb.customize ["modifyvm", :id, "--vram", "64"]
+      vb.customize ["modifyvm", :id, "--vram", "32"]
     end
     #
     # View the documentation for the provider you are using for more
@@ -74,15 +74,15 @@ Vagrant.configure("2") do |config|
     #   apt-get update
     #   apt-get install -y apache2
     # SHELL
-    # kali.vm.provision "shell", path: "./scripts/Bootstrap.sh"
+    vm1.vm.provision "shell", path: "./scripts/Bootstrap.sh"
   end
 
-  config.vm.define "node1" do |node1|
-    node1.vm.box = "ubuntu/trusty64"
-    node1.vm.hostname = 'node1'
-    node1.vm.network "public_network", use_dhcp_assigned_default_route: true
-    node1.vm.network "forwarded_port", guest: 443, host: 2443
-    node1.vm.provider "virtualbox" do |vb|
+  config.vm.define "VM2" do |vm2|
+    vm2.vm.box = "ubuntu/trusty64"
+    vm2.vm.hostname = 'VM2'
+    vm2.vm.network "public_network", use_dhcp_assigned_default_route: true
+    vm2.vm.network "forwarded_port", guest: 443, host: 2443
+    vm2.vm.provider "virtualbox" do |vb|
       # Display the VirtualBox GUI when booting the machine
       # vb.gui = true
 
@@ -93,26 +93,7 @@ Vagrant.configure("2") do |config|
       # Customize the amount of video memory on the VM:
       vb.customize ["modifyvm", :id, "--vram", "32"]
     end
-    node1.vm.provision "shell", path: "./scripts/Bootstrap.sh"
-  end
-
-  config.vm.define "node2" do |node2|
-    node2.vm.box = "ubuntu/trusty64"
-    node2.vm.hostname = 'node2'
-    node2.vm.network "public_network", use_dhcp_assigned_default_route: true
-    node2.vm.network "forwarded_port", guest: 443, host: 3443
-    node2.vm.provider "virtualbox" do |vb|
-      # Display the VirtualBox GUI when booting the machine
-      # vb.gui = true
-
-      # Customize the amount of memory on the VM:
-      vb.memory = "512"
-      # Customize the amount of processors on the VM:
-      vb.cpus = "1"
-      # Customize the amount of video memory on the VM:
-      vb.customize ["modifyvm", :id, "--vram", "32"]
-    end
-    node2.vm.provision "shell", path: "./scripts/Bootstrap.sh"
+    vm2.vm.provision "shell", path: "./scripts/Bootstrap.sh"
   end
 
 end
