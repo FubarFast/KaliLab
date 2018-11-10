@@ -39,7 +39,8 @@ Vagrant.configure("2") do |config|
     # Create a public network, which generally matched to bridged network.
     # Bridged networks make the machine appear as another physical device on
     # your network.
-    kali.vm.network "public_network", use_dhcp_assigned_default_route: true
+    # kali.vm.network "public_network", use_dhcp_assigned_default_route: true
+    kali.vm.network "private_network", ip: "10.10.0.10"
     # config.vm.network "forwarded_port", guest: 80, host: 8080
     kali.vm.network "forwarded_port", guest: 443, host: 1443
     # Share an additional folder to the guest VM. The first argument is
@@ -80,7 +81,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "node1" do |node1|
     node1.vm.box = "ubuntu/trusty64"
     node1.vm.hostname = 'node1'
-    node1.vm.network "public_network", use_dhcp_assigned_default_route: true
+    # node1.vm.network "public_network", use_dhcp_assigned_default_route: true
+    node1.vm.network "private_network", ip: "10.10.0.20"
     node1.vm.network "forwarded_port", guest: 443, host: 2443
     node1.vm.provider "virtualbox" do |vb|
       # Display the VirtualBox GUI when booting the machine
@@ -99,7 +101,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "node2" do |node2|
     node2.vm.box = "ubuntu/trusty64"
     node2.vm.hostname = 'node2'
-    node2.vm.network "public_network", use_dhcp_assigned_default_route: true
+    # node2.vm.network "public_network", use_dhcp_assigned_default_route: true
+    node2.vm.network "private_network", ip: "10.10.0.30"
     node2.vm.network "forwarded_port", guest: 443, host: 3443
     node2.vm.provider "virtualbox" do |vb|
       # Display the VirtualBox GUI when booting the machine
